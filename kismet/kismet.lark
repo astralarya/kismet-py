@@ -20,12 +20,12 @@ array: "[" [ value ("," value)* ] "]"
 range: "[" INTEGER ".." INTEGER "]"
 tuple: "(" [ value ("," value)* ] ")"
 
-roll: INTEGER? DIE INTEGER
+roll: INTEGER? distribution
+distribution: DIE ( INTEGER | array | range | tuple )
 
 
 // Tokens
 
-FUNC_DIE_START.2: /[dD]/"("
 DIE.2: /[dD]/
 INTEGER.2: ["+"|"-"]?DIGIT+
 WORD.1: (LETTER | DIGIT)+
