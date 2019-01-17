@@ -6,6 +6,7 @@ value: object
     | array
     | range
     | tuple
+    | roll
     | DIE
     | INTEGER
     | WORD
@@ -18,6 +19,8 @@ pair: WORD ":" value
 array: "[" [ value ("," value)* ] "]"
 range: "[" INTEGER ".." INTEGER "]"
 tuple: "(" [ value ("," value)* ] ")"
+
+roll: INTEGER? DIE INTEGER
 
 
 // Tokens
