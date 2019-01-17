@@ -3,7 +3,9 @@ from lark import Lark
 
 grammar_file = "kismet.lark"
 
-parser = Lark(open(path.join(path.dirname(__file__), grammar_file)))
+parser = Lark(
+    open(path.join(path.dirname(__file__), grammar_file)), parser="lalr", debug=True
+)
 
 
 class KismetParser:
