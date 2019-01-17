@@ -5,8 +5,7 @@ expr: value
 value: object
     | array
     | range
-    | range_die
-    | func_die
+    | tuple
     | DIE
     | INTEGER
     | WORD
@@ -18,15 +17,13 @@ pair: WORD ":" value
 
 array: "[" [ value ("," value)* ] "]"
 range: "[" INTEGER ".." INTEGER "]"
-range_die: RANGE_DIE_START INTEGER ".." INTEGER "]"
-func_die: FUNC_DIE_START [ value ("," value)* ] ")"
+tuple: "(" [ value ("," value)* ] ")"
 
 
 // Tokens
 
-FUNC_DIE_START.2: /[0-9]*[dD]/"("
-RANGE_DIE_START.2: /[0-9]*[dD]/"["
-DIE.2: /[0-9]*[dD][0-9]+/
+FUNC_DIE_START.2: /[dD]/"("
+DIE.2: /[dD]/
 INTEGER.2: ["+"|"-"]?DIGIT+
 WORD.1: (LETTER | DIGIT)+
 
