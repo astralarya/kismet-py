@@ -1,4 +1,26 @@
-start: WORD
+start: expr*
 
-%import common.WORD
+expr: value
+
+value: object
+    | array
+    | WORD
+    | DIE
+    | INTEGER
+
+array: "[" [ value ("," value)* ] "]"
+object: "{" [ pair ("," pair)* ] "}"
+pair: WORD ":" value
+    | INTEGER ":" value
+    | DIE ":" value
+
+// Tokens
+
+DIE.2: /[0-9]*[dD][0-9]+/
+INTEGER.2: DIGIT+
+WORD.1: (LETTER | DIGIT)+
+
+%import common.DIGIT
+%import common.LETTER
+
 %ignore " "
