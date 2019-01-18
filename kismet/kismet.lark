@@ -27,7 +27,7 @@ distribution: DIE ( INT | array | range | tuple )
 // Tokens
 
 DIE.2: /[dD]/
-INT.2: ["+"|"-"]? /\d+/ /(\b|(?=[dD]))/
+INT.2: ["+"|"-"] /\d+/ /(\b|(?=[dD]))/
 FLT.2: FLOAT
 VAR: "$" WORD
 WORD: (LETTER | DIGIT | "_")+
