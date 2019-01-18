@@ -7,6 +7,7 @@ value: object
     | range
     | tuple
     | roll
+    | FLT
     | INT
     | WORD
     | VAR
@@ -26,9 +27,11 @@ distribution: DIE ( INT | array | range | tuple )
 
 DIE.2: /[dD]/
 INT.2: ["+"|"-"]? /\d+/ /(\b|(?=[dD]))/
+FLT.2: FLOAT
 VAR: "$" WORD
 WORD: (LETTER | DIGIT | "_")+
 
+%import common.FLOAT
 %import common.DIGIT
 %import common.LETTER
 
