@@ -7,28 +7,27 @@ value: object
     | range
     | tuple
     | roll
-    | DIE
-    | INTEGER
+    | INT
     | WORD
+    | VAR
 
 object: "{" [ pair ("," pair)* ] "}"
 pair: WORD ":" value
-    | INTEGER ":" value
-    | DIE ":" value
 
 array: "[" [ value ("," value)* ] "]"
-range: "[" INTEGER ".." INTEGER "]"
+range: "[" INT ".." INT "]"
 tuple: "(" [ value ("," value)* ] ")"
 
-roll: INTEGER? distribution
-distribution: DIE ( INTEGER | array | range | tuple )
+roll: INT? distribution
+distribution: DIE ( INT | array | range | tuple )
 
 
 // Tokens
 
 DIE.2: /[dD]/
-INTEGER.2: ["+"|"-"]?DIGIT+
-WORD.1: (LETTER | DIGIT)+
+INT.2: ["+"|"-"]? /\d+/ /(\b|(?=[dD]))/
+VAR: "$" WORD
+WORD: (LETTER | DIGIT | "_")+
 
 %import common.DIGIT
 %import common.LETTER
