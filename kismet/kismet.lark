@@ -7,8 +7,7 @@ value: object
     | range
     | tuple
     | roll
-    | FLT
-    | INT
+    | number
     | WORD
     | ESCAPED_STRING
     | VAR
@@ -17,23 +16,33 @@ object: "{" [ pair ("," pair)* ] "}"
 pair: WORD ":" value
 
 array: "[" [ value ("," value)* ] "]"
-range: "[" INT ".." INT "]"
+range: "[" number ".." number "]"
+    | "[" number "..." number "]" -> crange
 tuple: "(" [ value ("," value)* ] ")"
 
-roll: INT? distribution
-distribution: DIE ( INT | array | range | tuple )
+roll: number? distribution
+distribution: DIE ( number | array | range | tuple )
 
+number: FLOAT | INT
 
 // Tokens
 
+FLOAT.2: ["+"|"-"] UNSIGNED_FLOAT
 DIE.2: /[dD]/
-INT.2: ["+"|"-"] /\d+/ /(\b|(?=[dD]))/
-FLT.2: FLOAT
+INT.2: SIGNED_INT /(\b|(?=[dD]))/
 VAR: "$" WORD
 WORD: (LETTER | DIGIT | "_")+
 
+UNSIGNED_FLOAT: INT _EXP
+    | DECIMAL _EXP?
+DECIMAL: DIGITS "." DIGITS
+    | DIGITS "." /(?!\.)/
+    | /(?<!\.)/ "." DIGITS
+DIGITS: DIGIT+
+
 %import common.ESCAPED_STRING
-%import common.FLOAT
+%import common._EXP
+%import common.SIGNED_INT
 %import common.DIGIT
 %import common.LETTER
 
