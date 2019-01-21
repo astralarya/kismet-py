@@ -15,23 +15,50 @@ class KismetParser:
 
     def parse(self, text: str):
         tree = parser.parse(text)
-        #print(tree)
         tree = KismetTransformer().transform(tree)
         return tree
 
 
+class Expr:
+    def __init__(self, value, expr):
+        self.value = value
+        self.expr = expr
+
+    def __repr__(self):
+        return "Expr(" + repr(self.value) + ", " + repr(self.expr) + ")"
+
+    def __str__(self):
+        return str(self.value) + " = " + str(self.expr)
+
+
 class KismetTransformer(Transformer):
+    # Tokens
     def int(self, args):
-        return int(args[0])
+        return Expr(int(args[0]), args[0])
 
     def die_count(self, args):
-        return int(args[0])
+        return Expr(int(args[0]), args[0])
 
+    # Rules
     def number(self, args):
-        return args[0]
+        return Expr(args[0].value, args[0].expr)
 
     def d_number(self, args):
-        return DiscreteUniform(1, args[1])
+        return Expr(DiscreteUniform(1, args[1].value), "d" + args[1].expr)
 
     def sample(self, args):
-        return args[1].sample([args[0]])
+        value = list(args[1].value.sample() for i in range(args[0].value))
+        return Expr(
+            sum(value).tolist(),
+            "[" + " + ".join(str(item.tolist()) for item in value) + "]",
+        )
+
+    def sample1(self, args):
+        value = args[0].value.sample().tolist()
+        return Expr(value, "[" + str(value) + "]")
+
+    def value(self, args):
+        return Expr(args[0].value, args[0].expr)
+
+    def start(self, args):
+        return "\n".join(str(arg) for arg in args)
