@@ -1,6 +1,4 @@
-start: expr*
-
-expr: value
+start: value*
 
 value: object
     | array
@@ -20,10 +18,14 @@ range: "[" number ".." number "]"
     | "[" number "..." number "]" -> crange
 tuple: "(" [ value ("," value)* ] ")"
 
-roll: number? distribution
+roll: number distribution
+    | distribution -> roll1
 distribution: DIE ( number | array | range | tuple )
 
-number: FLOAT | INT
+number: float | int
+
+float: FLOAT
+int: INT
 
 // Tokens
 
