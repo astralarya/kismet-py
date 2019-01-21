@@ -6,8 +6,8 @@ value: object
     | tuple
     | sample
     | number
+    | string
     | WORD
-    | ESCAPED_STRING
     | VAR
 
 object: "{" [ pair ("," pair)* ] "}"
@@ -30,6 +30,7 @@ number: float | int
 float: FLOAT
 int: INT
 die_count: DIE_COUNT
+string: ESCAPED_STRING
 
 // Tokens
 

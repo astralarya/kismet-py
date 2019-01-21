@@ -44,6 +44,13 @@ class KismetTransformer(Transformer):
     def die_count(self, args):
         return Expr(int(args[0]), args[0])
 
+    def float(self, args):
+        return Expr(float(args[0]), args[0])
+
+    def string(self, args):
+        value = str(args[0])[1:-1].encode().decode("unicode_escape")
+        return Expr(value, value)
+
     # Rules
     def number(self, args):
         return Expr(args[0].value, args[0].expr)
