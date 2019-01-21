@@ -28,7 +28,12 @@ class Expr:
         return "Expr(" + repr(self.value) + ", " + repr(self.expr) + ")"
 
     def __str__(self):
-        return str(self.value) + " = " + str(self.expr)
+        value = str(self.value)
+        expr = str(self.expr)
+        if value == expr:
+            return value
+        else:
+            return value + " = " + expr
 
 
 class KismetTransformer(Transformer):
