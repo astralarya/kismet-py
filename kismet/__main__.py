@@ -1,3 +1,4 @@
+from sys import exit
 from prompt_toolkit import PromptSession
 
 from kismet.parser import KismetParser
@@ -11,5 +12,10 @@ parser = KismetParser()
 session = PromptSession("> ")
 
 while True:
-    text = session.prompt()
-    print(parser.parse(text))
+    try:
+        text = session.prompt()
+        print(parser.parse(text))
+    except EOFError:
+        exit(0)
+    except KeyboardInterrupt:
+        exit(130)
