@@ -4,7 +4,7 @@ value: object
     | array
     | range
     | tuple
-    | roll
+    | sample
     | number
     | WORD
     | ESCAPED_STRING
@@ -18,22 +18,27 @@ range: "[" number ".." number "]"
     | "[" number "..." number "]" -> crange
 tuple: "(" [ value ("," value)* ] ")"
 
-roll: number distribution
-    | distribution -> roll1
-distribution: DIE ( number | array | range | tuple )
+sample: die_count distribution
+    | distribution -> sample1
+distribution: DIE number -> d_number
+    | DIE array -> d_array
+    | DIE range -> d_range
+    | DIE tuple -> d_tuple
 
 number: float | int
 
 float: FLOAT
 int: INT
+die_count: DIE_COUNT
 
 // Tokens
 
 FLOAT.2: ["+"|"-"] UNSIGNED_FLOAT
 DIE.2: /[dD]/
-INT.2: SIGNED_INT /(\b|(?=[dD]))/
+DIE_COUNT.2: SIGNED_INT /(?=[dD])/
+INT.2: SIGNED_INT /(\b)/
 VAR: "$" WORD
-WORD: (LETTER | DIGIT | "_")+
+WORD: (LETTER | "_") (LETTER | DIGIT | "_")*
 
 UNSIGNED_FLOAT: INT _EXP
     | DECIMAL _EXP?
