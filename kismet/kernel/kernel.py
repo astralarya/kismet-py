@@ -12,6 +12,10 @@ class KismetKernel(Kernel):
     language_version = "0.1"
     banner = "Kismet kernel - dice parser"
 
+    language_info = {
+        "name": "kismet",
+    }
+
     parser = KismetParser()
 
     def do_execute(
