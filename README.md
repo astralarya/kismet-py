@@ -1,6 +1,6 @@
 # Kismet
-A JIT compiled dice roll parser that uses LLVM.
-Comes with an optional personality module.
+A dice roll parser with an optional personality module.
+Comes with a Jupyter kernel.
 
 ## Installation
 ### Jupyter
