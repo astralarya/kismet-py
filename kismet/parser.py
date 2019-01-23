@@ -1,3 +1,4 @@
+from typing import Tuple
 from os import path
 from lark import Lark, Transformer
 from .distributions import DiscreteUniform
@@ -19,58 +20,76 @@ class KismetParser:
         return tree
 
 
+def pretty(tensor):
+    prefix = len("tensor(")
+    string = str(tensor)
+    return "\n".join(line[prefix:] for line in string.splitlines())[:-1]
+
+
 class Expr:
-    def __init__(self, value, expr):
-        self.value = value
-        self.expr = expr
+    def __init__(self, expr: any, args: Tuple["Expr"] = []):
+        self.expr: any = expr if callable(expr) else lambda: (expr, str(expr))
+        self.args: Tuple["Expr"] = args
+        self.value: any = None
+        self.repr: str = None
+
+    def __call__(self):
+        self.value, self.repr = self.expr(*[arg() for arg in self.args])
+        return self
 
     def __repr__(self):
-        return "Expr(" + repr(self.value) + ", " + repr(self.expr) + ")"
+        return "Expr(" + repr(self.value) + ", " + repr(self.args) + ")"
 
     def __str__(self):
         value = str(self.value)
-        expr = str(self.expr)
-        if value == expr:
-            return value
+        _repr = str(self.repr)
+        if value == _repr:
+            return pretty(value)
         else:
-            return value + " = " + expr
+            return pretty(value) + " = " + _repr
 
 
 class KismetTransformer(Transformer):
     # Tokens
     def int(self, args):
-        return Expr(int(args[0]), args[0])
+        return Expr(int(args[0]))
 
     def die_count(self, args):
-        return Expr(int(args[0]), args[0])
+        return Expr(int(args[0]))
 
     def float(self, args):
-        return Expr(float(args[0]), args[0])
+        return Expr(float(args[0]))
 
     def string(self, args):
-        value = str(args[0])[1:-1].encode().decode("unicode_escape")
-        return Expr(value, value)
+        return Expr(str(args[0])[1:-1].encode().decode("unicode_escape"))
 
     # Rules
     def number(self, args):
-        return Expr(args[0].value, args[0].expr)
+        return args[0]
 
     def d_number(self, args):
-        return Expr(DiscreteUniform(1, args[1].value), "d" + args[1].expr)
+        def f(x):
+            return (DiscreteUniform(1, x.value), "d%s" % x.repr)
+
+        return Expr(f, (args[1],))
 
     def sample(self, args):
-        value = list(args[1].value.sample() for i in range(args[0].value))
-        return Expr(
-            sum(value).tolist(),
-            "[" + " + ".join(str(item.tolist()) for item in value) + "]",
-        )
+        def f(x, y):
+            samples = list(y.value.sample() for i in range(x.value))
+            strings = list(pretty(sample) for sample in samples)
+            return (sum(samples), "[" + " + ".join(strings) + "]")
+
+        return Expr(f, (args[0], args[1]))
 
     def sample1(self, args):
-        value = args[0].value.sample().tolist()
-        return Expr(value, "[" + str(value) + "]")
+        def f(x):
+            samples = list(x.value.sample() for i in range(1))
+            return (sum(samples), "[" + " + ".join(samples) + "]")
+
+        return lambda: (args[0].sample() for i in range(1))
 
     def value(self, args):
-        return Expr(args[0].value, args[0].expr)
+        return args[0]
 
     def start(self, args):
-        return "\n".join(str(arg) for arg in args)
+        return "\n".join(str(arg()) for arg in args)
