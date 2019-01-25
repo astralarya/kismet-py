@@ -99,5 +99,38 @@ class KismetTransformer(Transformer):
     def value(self, args):
         return args[0]
 
+    def mul(self, args):
+        def f(x, y):
+            return (torch.mul(x.value, y.value), x.repr + " * " + y.repr)
+
+        return Expr(f, (args[0], args[1]))
+
+    def div(self, args):
+        def f(x, y):
+            return (torch.div(x.value, y.value), x.repr + " / " + y.repr)
+
+        return Expr(f, (args[0], args[1]))
+
+    def product(self, args):
+        return args[0]
+
+    def add(self, args):
+        def f(x, y):
+            return (torch.add(x.value, y.value), x.repr + " + " + y.repr)
+
+        return Expr(f, (args[0], args[1]))
+
+    def sub(self, args):
+        def f(x, y):
+            return (torch.add(x.value, torch.mul(y.value, -1)), x.repr + " - " + y.repr)
+
+        return Expr(f, (args[0], args[1]))
+
+    def sum(self, args):
+        return args[0]
+
+    def expr(self, args):
+        return args[0]
+
     def start(self, args):
         return "\n".join(pretty(arg()) for arg in args)
