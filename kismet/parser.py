@@ -84,7 +84,7 @@ class KismetTransformer(Transformer):
         def f(x, y):
             samples = list(y.value(()) for i in range(x.value))
             strings = list(pretty(sample) for sample in samples)
-            return (sum(samples), "[" + " + ".join(strings) + "]")
+            return (sum(samples), "(" + " + ".join(strings) + ")")
 
         return Expr(f, (args[0], args[1]))
 
@@ -92,7 +92,7 @@ class KismetTransformer(Transformer):
         def f(x):
             samples = list(x.value(()) for i in range(1))
             strings = list(pretty(sample) for sample in samples)
-            return (sum(samples), "[" + " + ".join(strings) + "]")
+            return (sum(samples), "(" + " + ".join(strings) + ")")
 
         return Expr(f, (args[0],))
 
