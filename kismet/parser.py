@@ -28,7 +28,7 @@ def pretty(tensor):
 
 
 class Expr:
-    def __init__(self, expr: any, args: Tuple["Expr"] = []):
+    def __init__(self, expr: any, args: Tuple["Expr"] = ()):
         self.expr: any = expr if callable(expr) else lambda: (expr, str(expr))
         self.args: Tuple["Expr"] = args
         self.value: any = None
