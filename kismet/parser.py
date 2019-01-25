@@ -1,7 +1,8 @@
 from typing import Tuple
 from os import path
 from lark import Lark, Transformer
-from .distributions import DiscreteUniform
+import torch
+from torch.distributions.categorical import Categorical
 
 grammar_file = "kismet.lark"
 
@@ -69,13 +70,16 @@ class KismetTransformer(Transformer):
 
     def d_number(self, args):
         def f(x):
-            return (DiscreteUniform(1, x.value), "d%s" % x.repr)
+            return (
+                lambda shape: Categorical(torch.ones([x.value])).sample(shape) + 1,
+                "d%s" % x.repr,
+            )
 
         return Expr(f, (args[1],))
 
     def sample(self, args):
         def f(x, y):
-            samples = list(y.value.sample() for i in range(x.value))
+            samples = list(y.value(()) for i in range(x.value))
             strings = list(pretty(sample) for sample in samples)
             return (sum(samples), "[" + " + ".join(strings) + "]")
 
@@ -83,7 +87,7 @@ class KismetTransformer(Transformer):
 
     def sample1(self, args):
         def f(x):
-            samples = list(x.value.sample() for i in range(1))
+            samples = list(x.value(()) for i in range(1))
             return (sum(samples), "[" + " + ".join(samples) + "]")
 
         return lambda: (args[0].sample() for i in range(1))
