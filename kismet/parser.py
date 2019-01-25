@@ -32,7 +32,7 @@ def pretty(tensor):
 
 class Expr:
     def __init__(self, expr: any, args: Tuple["Expr"] = ()):
-        self.expr: any = expr if callable(expr) else lambda: (expr, str(expr))
+        self.expr: any = expr if callable(expr) else lambda: (expr, pretty(expr))
         self.args: Tuple["Expr"] = args
         self.value: any = None
         self.repr: str = None
@@ -45,12 +45,12 @@ class Expr:
         return "Expr(" + repr(self.value) + ", " + repr(self.args) + ")"
 
     def __str__(self):
-        value = str(self.value)
-        _repr = str(self.repr)
+        value = pretty(self.value)
+        _repr = pretty(self.repr)
         if value == _repr:
-            return pretty(value)
+            return value
         else:
-            return pretty(value) + " = " + _repr
+            return value + " = " + _repr
 
 
 class KismetTransformer(Transformer):
@@ -100,4 +100,4 @@ class KismetTransformer(Transformer):
         return args[0]
 
     def start(self, args):
-        return "\n".join(str(arg()) for arg in args)
+        return "\n".join(pretty(arg()) for arg in args)
