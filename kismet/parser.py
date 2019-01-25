@@ -24,7 +24,10 @@ class KismetParser:
 def pretty(tensor):
     prefix = len("tensor(")
     string = str(tensor)
-    return "\n".join(line[prefix:] for line in string.splitlines())[:-1]
+    if isinstance(tensor, torch.Tensor):
+        return "\n".join(line[prefix:] for line in string.splitlines())[:-1]
+    else:
+        return string
 
 
 class Expr:
