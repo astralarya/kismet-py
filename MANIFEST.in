@@ -1,1 +1,3 @@
-include kismet/*.lark
+include *.py
+include *.lark
+graft kismet
