@@ -7,15 +7,14 @@ class KismetKernel(Kernel):
     """
     IPython Kernel for the Kismet Parser
     """
+
     implementation = "Kismet"
     implementation_version = "0.1"
     language = "Kismet"
     language_version = "0.1"
     banner = "Kismet kernel - dice parser"
 
-    language_info = {
-        "name": "kismet",
-    }
+    language_info = {"name": "kismet"}
 
     def do_execute(
         self,

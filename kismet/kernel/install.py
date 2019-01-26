@@ -20,9 +20,7 @@ def install_my_kernel_spec(user=True, prefix=None):
             json.dump(kernel_json, f, sort_keys=True)
 
         print("Installing Kismet Jupyter kernel spec")
-        KernelSpecManager().install_kernel_spec(
-            td, "kismet", user=user, prefix=prefix
-        )
+        KernelSpecManager().install_kernel_spec(td, "kismet", user=user, prefix=prefix)
 
 
 def _is_root():
