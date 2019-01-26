@@ -15,4 +15,4 @@ def process(string: str):
     elif emoted:
         return emoted
     else:
-        return None
+        return ""
