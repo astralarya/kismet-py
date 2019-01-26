@@ -8,8 +8,7 @@ parser = KismetParser()
 
 
 def process(string: str):
-    parsed = parser.parse(string)
-    emoted = analyze(string)
+    parsed, emoted = process_parts(string)
     if parsed and emoted:
         return parsed + "\n" + emoted
     elif parsed:
@@ -18,6 +17,17 @@ def process(string: str):
         return emoted
     else:
         return ""
+
+
+def process_parts(string: str):
+    return (parser.parse(str), analyze(string))
+
+
+def process_markdown(string: str):
+    blocks = code_blocks(string)
+    answers = [parser.parse(block) for block in blocks]
+    result = "```\n" + "\n".join(answers) + "\n```" if answers else None
+    return (result, analyze(string))
 
 
 def code_blocks(string: str, syntax_type: str = "kismet"):
