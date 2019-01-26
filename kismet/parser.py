@@ -1,8 +1,9 @@
-from typing import Tuple
-from os import path
 from lark import Lark, Transformer
+from lark.exceptions import VisitError, UnexpectedToken
+from os import path
 import torch
 from torch.distributions.categorical import Categorical
+from typing import Tuple
 
 grammar_file = "kismet.lark"
 
@@ -16,9 +17,12 @@ class KismetParser:
         pass
 
     def parse(self, text: str):
-        tree = parser.parse(text)
-        tree = KismetTransformer().transform(tree)
-        return tree
+        try:
+            tree = parser.parse(text)
+            tree = KismetTransformer().transform(tree)
+            return tree
+        except (VisitError, UnexpectedToken, ValueError, NotImplementedError):
+            return None
 
 
 def pretty(tensor):
