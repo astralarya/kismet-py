@@ -20,7 +20,7 @@ def process(string: str):
 
 
 def process_parts(string: str):
-    return (parser.parse(str), analyze(string))
+    return (parser.parse(string), analyze(string))
 
 
 def process_markdown(string: str):
