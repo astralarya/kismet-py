@@ -5,7 +5,7 @@ RUN conda update --all && \
     conda config --append channels conda-forge && \
     conda install \
         # Python 3.6
-        'python>=3.6<3.7' \
+        'python>=3.6,<3.7' \
         # Dependencies
         lark-parser \
         numpy \
