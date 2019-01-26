@@ -1,5 +1,5 @@
 from lark import Lark, Transformer
-from lark.exceptions import VisitError, UnexpectedToken
+from lark.exceptions import VisitError, UnexpectedToken, UnexpectedCharacters
 from os import path
 import torch
 from torch.distributions.categorical import Categorical
@@ -16,13 +16,22 @@ class KismetParser:
     def __init__(self):
         pass
 
-    def parse(self, text: str):
+    def parse(self, text: str, throw=False):
         try:
             tree = parser.parse(text)
             tree = KismetTransformer().transform(tree)
             return tree
-        except (VisitError, UnexpectedToken, ValueError, NotImplementedError):
-            return None
+        except (
+            VisitError,
+            UnexpectedToken,
+            UnexpectedCharacters,
+            ValueError,
+            NotImplementedError,
+        ) as e:
+            if throw:
+                raise Exception from e
+            else:
+                return None
 
 
 def pretty(tensor):
