@@ -4,7 +4,7 @@ from torch.distributions.gamma import Gamma
 from torch.distributions.categorical import Categorical
 import math
 from typing import List
-from .responses import responses
+from kismet.personality.responses import responses
 
 
 def analyze(string: str, responses_: List[str] = responses):
