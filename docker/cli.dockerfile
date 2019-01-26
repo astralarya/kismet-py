@@ -1,7 +1,8 @@
-FROM continuumio/anaconda
+FROM continuumio/miniconda3
 
 RUN conda update --all && \
     conda config --prepend channels intel && \
+    conda config --prepend channels pytorch && \
     conda config --append channels conda-forge && \
     conda install \
         # Python 3.6
@@ -10,12 +11,12 @@ RUN conda update --all && \
         lark-parser \
         numpy \
         prompt_toolkit>=2.0 \
+        pytorch-cpu \
         regex \
-        torch \
     && \
     # Install Kismet
     pip install --no-cache-dir kismet && \
     # Clean up
-    conda clean
+    conda clean --all
 
 ENTRYPOINT python -m kismet
