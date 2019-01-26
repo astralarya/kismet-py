@@ -1,8 +1,8 @@
 FROM continuumio/anaconda
 
 RUN conda update --all && \
-    conda config --prepend intel && \
-    conda config --append conda-forge && \
+    conda config --prepend channels intel && \
+    conda config --append channels conda-forge && \
     conda install \
         # Python 3.6
         'python>=3.6<3.7' \
