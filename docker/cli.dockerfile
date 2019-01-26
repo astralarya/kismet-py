@@ -10,7 +10,7 @@ RUN conda update --all && \
         # Dependencies
         lark-parser \
         numpy \
-        prompt_toolkit>=2.0 \
+        prompt_toolkit \
         pytorch-cpu \
         regex \
     && \
