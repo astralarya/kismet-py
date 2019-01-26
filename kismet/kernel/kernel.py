@@ -1,5 +1,6 @@
 from ipykernel.kernelbase import Kernel
-from kismet.parser import KismetParser
+
+from kismet.core import process
 
 
 class KismetKernel(Kernel):
@@ -16,8 +17,6 @@ class KismetKernel(Kernel):
         "name": "kismet",
     }
 
-    parser = KismetParser()
-
     def do_execute(
         self,
         code: str,
@@ -26,7 +25,7 @@ class KismetKernel(Kernel):
         user_expressions=None,
         allow_stdin=False,
     ):
-        output = str(self.parser.parse(code))
+        output = str(process(code))
         if not silent:
             stream_content = {"name": "stdout", "text": output}
             self.send_response(self.iopub_socket, "stream", stream_content)
