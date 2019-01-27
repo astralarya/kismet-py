@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+docker build -t autochthe/kismet.discord -f docker/discord.dockerfile .
+docker build -t autochthe/kismet -f docker/cli.dockerfile .
