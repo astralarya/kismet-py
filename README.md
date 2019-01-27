@@ -21,8 +21,19 @@ docker run autochthe/kismet
 
 ### Discord Bot
 ```bash
-docker run \
-    -e DISCORD_CLIENTID -e DISCORD_TOKEN
-    autochthe/kismet.discord
+docker run autochthe/kismet.discord
 ```
+#### Self healing runner
+Appropriately updates and restarts
+```bash
+wget https://github.com/autochthe/kismet-py/blob/master/docker/run-kismet.discord
+chmod a+x run-kismet.discord
 
+## Edit `run-kismet.discord` and
+# ./run-kismet.discord
+
+## OR
+# DISCORD_CLIENTID=00000 \
+# DISCORD_TOKEN=xxx.xxx \
+# ./run-kismet.discord
+```

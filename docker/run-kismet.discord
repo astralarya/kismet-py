@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# export DISCORD_CLIENTID=00000
+# export DISCORD_TOKEN=xxx.xxx
+
+
+docker pull autochthe/kismet.discord
+docker stop kismet.discord
+docker run -it --rm -e DISCORD_CLIENTID -e DISCORD_TOKEN --name kismet.discord autochthe/kismet.discord
