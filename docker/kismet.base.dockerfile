@@ -19,3 +19,5 @@ RUN conda update --all && \
 
 COPY version.txt /root
 RUN pip install --no-cache-dir kismet=="$(cat /root/version.txt)"
+
+STOPSIGNAL SIGINT

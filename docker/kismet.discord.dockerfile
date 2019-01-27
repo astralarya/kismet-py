@@ -1,3 +1,3 @@
 FROM autochthe/kismet.base
 
-ENTRYPOINT python -m kismet.chatbot.discord
+ENTRYPOINT ["python", "-m", "kismet.chatbot.discord"]
