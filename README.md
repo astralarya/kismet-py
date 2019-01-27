@@ -26,7 +26,7 @@ docker run autochthe/kismet.discord
 #### Self healing runner
 Appropriately updates and restarts
 ```bash
-wget https://github.com/autochthe/kismet-py/blob/master/docker/run-kismet.discord
+wget https://raw.githubusercontent.com/autochthe/kismet-py/master/docker/run-kismet.discord
 chmod a+x run-kismet.discord
 
 ## Edit `run-kismet.discord` and
