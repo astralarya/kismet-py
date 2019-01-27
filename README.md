@@ -1,9 +1,7 @@
 # Kismet
-A dice roll parser with an optional personality module.
-Comes with a Jupyter kernel.
+A dice roll parser with personality
 
 ## Installation
-### pip
 ```bash
 pip install kismet
 ```
@@ -13,3 +11,18 @@ After installation with `pip`, you may optionally install the Jupyter kernel:
 ```bash
 pythom -m kismet.kernel.install
 ```
+
+## Docker
+
+### Command Line Interface
+```bash
+docker run autochthe/kismet
+```
+
+### Discord Bot
+```bash
+docker run \
+    -e DISCORD_CLIENTID -e DISCORD_TOKEN
+    autochthe/kismet.discord
+```
+
