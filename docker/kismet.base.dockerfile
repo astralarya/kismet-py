@@ -19,5 +19,3 @@ RUN conda update --all && \
 
 COPY version.txt /root
 RUN pip install --no-cache-dir kismet=="$(cat /root/version.txt)"
-
-ENTRYPOINT python -m kismet.chatbot.discord
