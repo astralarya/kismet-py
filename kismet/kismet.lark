@@ -63,4 +63,4 @@ DIGITS: DIGIT+
 %import common.DIGIT
 %import common.LETTER
 
-%ignore " "
+%ignore /\s/
