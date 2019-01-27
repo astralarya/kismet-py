@@ -25,7 +25,11 @@ def process_parts(string: str):
 
 def process_markdown(string: str):
     blocks = code_blocks(string)
-    answers = [parser.parse(block) for block in blocks]
+    answers = [
+        answer
+        for answer in [parser.parse(block) for block in blocks]
+        if answer is not None
+    ]
     result = "```\n" + "\n".join(answers) + "\n```" if answers else None
     return (result, analyze(string))
 
