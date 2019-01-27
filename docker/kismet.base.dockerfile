@@ -13,6 +13,16 @@ RUN conda update --all && \
         prompt_toolkit \
         pytorch-cpu \
         regex \
+        # Transitive Dependencies
+        aiohttp \
+        async-timeout \
+        chardet \
+        graphviz \
+        multidict \
+        networkx \
+        opt_einsum \
+        tqdm \
+        websockets \
     && \
     # Clean up
     conda clean --all
