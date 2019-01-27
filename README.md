@@ -23,9 +23,21 @@ docker run autochthe/kismet
 ```bash
 docker run -p 8888:8888 autochthe/kismet.jupyter
 ```
-#### Vim bindings
+Vim bindings
 ```bash
 docker run -p 8888:8888 autochthe/kismet.jupyter.vim
+```
+#### Self healing runners
+```bash
+wget https://raw.githubusercontent.com/autochthe/kismet-py/master/docker/run-kismet.jupyter
+chmod a+x run-kismet.jupyter
+./run-kismet.jupyter
+```
+Vim bindings
+```bash
+wget https://raw.githubusercontent.com/autochthe/kismet-py/master/docker/run-kismet.jupyter.vim
+chmod a+x run-kismet.jupyter.vim
+./run-kismet.jupyter.vim
 ```
 
 ### Discord Bot
@@ -33,7 +45,6 @@ docker run -p 8888:8888 autochthe/kismet.jupyter.vim
 docker run autochthe/kismet.discord
 ```
 #### Self healing runner
-Appropriately updates and restarts
 ```bash
 wget https://raw.githubusercontent.com/autochthe/kismet-py/master/docker/run-kismet.discord
 chmod a+x run-kismet.discord

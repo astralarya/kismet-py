@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+
+docker pull autochthe/kismet.jupyter
+docker image prune --force
+docker stop kismet.jupyter
+docker run -it --rm -p 8888:8888 --name kismet.jupyter autochthe/kismet.jupyter
