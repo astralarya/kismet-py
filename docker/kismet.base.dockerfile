@@ -6,8 +6,10 @@ RUN conda update --all && \
     conda config --append channels conda-forge && \
     conda install \
         # Python 3.6
-        'python>=3.6,<3.7' \
+        python'>=3.6,<3.7' \
         # Dependencies
+        ipython'>=7' \
+        jupyterlab \
         lark-parser \
         numpy \
         prompt_toolkit \
@@ -29,5 +31,6 @@ RUN conda update --all && \
 
 COPY version.txt /root
 RUN pip install --no-cache-dir kismet=="$(cat /root/version.txt)"
+RUN python -m kismet.kernel.install
 
 STOPSIGNAL SIGINT

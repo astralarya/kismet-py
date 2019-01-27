@@ -6,5 +6,7 @@ cd ..
 
 
 docker build -t autochthe/kismet.base -f docker/kismet.base.dockerfile "$@" .
-docker build -t autochthe/kismet.discord -f docker/kismet.discord.dockerfile .
+
 docker build -t autochthe/kismet -f docker/kismet.dockerfile .
+docker build -t autochthe/kismet.discord -f docker/kismet.discord.dockerfile .
+docker build -t autochthe/kismet.jupyter -f docker/kismet.jupyter.dockerfile .
