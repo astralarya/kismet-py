@@ -11,6 +11,7 @@ RUN conda update --all && \
         ipython'>=7' \
         jupyterlab \
         lark-parser \
+        nodejs \
         numpy \
         prompt_toolkit \
         pytorch-cpu \

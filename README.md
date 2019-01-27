@@ -19,6 +19,15 @@ pythom -m kismet.kernel.install
 docker run autochthe/kismet
 ```
 
+### Jupyterlab Server
+```bash
+docker run -p 8888:8888 autochthe/kismet.jupyter
+```
+#### Vim bindings
+```bash
+docker run -p 8888:8888 autochthe/kismet.jupyter.vim
+```
+
 ### Discord Bot
 ```bash
 docker run autochthe/kismet.discord
