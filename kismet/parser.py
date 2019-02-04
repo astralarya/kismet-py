@@ -67,31 +67,45 @@ class Expr:
 
 
 class KismetTransformer(Transformer):
-    # Tokens
-    def int(self, args):
-        return Expr(int(args[0]))
-
-    def die_count(self, args):
-        return Expr(int(args[0]))
-
-    def float(self, args):
-        return Expr(float(args[0]))
-
-    def string(self, args):
-        return Expr(str(args[0])[1:-1].encode().decode("unicode_escape"))
-
     # Rules
-    def number(self, args):
+    def start(self, args):
+        return "\n".join(pretty(arg()) for arg in args)
+
+    def expr(self, args):
         return args[0]
 
-    def d_number(self, args):
-        def f(x):
-            return (
-                lambda shape: Categorical(torch.ones([x.value])).sample(shape) + 1,
-                "d%s" % x.repr,
-            )
+    def sum(self, args):
+        return args[0]
 
-        return Expr(f, (args[1],))
+    def add(self, args):
+        def f(x, y):
+            return (torch.add(x.value, y.value), x.repr + " + " + y.repr)
+
+        return Expr(f, (args[0], args[1]))
+
+    def sub(self, args):
+        def f(x, y):
+            return (torch.add(x.value, torch.mul(y.value, -1)), x.repr + " - " + y.repr)
+
+        return Expr(f, (args[0], args[1]))
+
+    def product(self, args):
+        return args[0]
+
+    def mul(self, args):
+        def f(x, y):
+            return (torch.mul(x.value, y.value), x.repr + " * " + y.repr)
+
+        return Expr(f, (args[0], args[1]))
+
+    def div(self, args):
+        def f(x, y):
+            return (torch.div(x.value, y.value), x.repr + " / " + y.repr)
+
+        return Expr(f, (args[0], args[1]))
+
+    def value(self, args):
+        return args[0]
 
     def sample(self, args):
         def f(x, y):
@@ -109,41 +123,26 @@ class KismetTransformer(Transformer):
 
         return Expr(f, (args[0],))
 
-    def value(self, args):
+    def d_number(self, args):
+        def f(x):
+            return (
+                lambda shape: Categorical(torch.ones([x.value])).sample(shape) + 1,
+                "d%s" % x.repr,
+            )
+
+        return Expr(f, (args[1],))
+
+    def number(self, args):
         return args[0]
 
-    def mul(self, args):
-        def f(x, y):
-            return (torch.mul(x.value, y.value), x.repr + " * " + y.repr)
+    def float(self, args):
+        return Expr(float(args[0]))
 
-        return Expr(f, (args[0], args[1]))
+    def int(self, args):
+        return Expr(int(args[0]))
 
-    def div(self, args):
-        def f(x, y):
-            return (torch.div(x.value, y.value), x.repr + " / " + y.repr)
+    def die_count(self, args):
+        return Expr(int(args[0]))
 
-        return Expr(f, (args[0], args[1]))
-
-    def product(self, args):
-        return args[0]
-
-    def add(self, args):
-        def f(x, y):
-            return (torch.add(x.value, y.value), x.repr + " + " + y.repr)
-
-        return Expr(f, (args[0], args[1]))
-
-    def sub(self, args):
-        def f(x, y):
-            return (torch.add(x.value, torch.mul(y.value, -1)), x.repr + " - " + y.repr)
-
-        return Expr(f, (args[0], args[1]))
-
-    def sum(self, args):
-        return args[0]
-
-    def expr(self, args):
-        return args[0]
-
-    def start(self, args):
-        return "\n".join(pretty(arg()) for arg in args)
+    def string(self, args):
+        return Expr(str(args[0])[1:-1].encode().decode("unicode_escape"))
