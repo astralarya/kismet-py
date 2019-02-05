@@ -113,6 +113,12 @@ class KismetTransformer(Transformer):
     def value(self, args):
         return args[0]
 
+    def array(self, args):
+        return Expr(
+            lambda *args: (list(values(args)), "[" + ", ".join(reprs(args)) + "]"),
+            args,
+        )
+
     def tuple(self, args):
         return Expr(
             lambda *args: (tuple(values(args)), "(" + ", ".join(reprs(args)) + ")"), args
