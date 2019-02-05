@@ -1,9 +1,10 @@
 from lark import Lark, Transformer
 from lark.exceptions import VisitError, UnexpectedToken, UnexpectedCharacters
 from os import path
+from traceback import print_exc
 import torch
 from torch.distributions.categorical import Categorical
-from typing import Tuple
+from typing import Tuple, List
 
 grammar_file = "kismet.lark"
 
@@ -28,10 +29,7 @@ class KismetParser:
             ValueError,
             NotImplementedError,
         ) as e:
-            if throw:
-                raise Exception from e
-            else:
-                return None
+            print_exc()
 
 
 def pretty(tensor):
@@ -64,6 +62,14 @@ class Expr:
             return value
         else:
             return value + " = " + _repr
+
+
+def values(args: List[Expr]):
+    return [arg.value for arg in args]
+
+
+def reprs(args: List[Expr]):
+    return [arg.repr for arg in args]
 
 
 class KismetTransformer(Transformer):
@@ -106,6 +112,11 @@ class KismetTransformer(Transformer):
 
     def value(self, args):
         return args[0]
+
+    def tuple(self, args):
+        return Expr(
+            lambda *args: (tuple(values(args)), "(" + ", ".join(reprs(args)) + ")"), args
+        )
 
     def sample(self, args):
         def f(x, y):
