@@ -7,4 +7,10 @@
 docker pull autochthe/kismet.discord
 docker image prune --force
 docker stop kismet.discord
-docker run -it --rm -e DISCORD_CLIENTID -e DISCORD_TOKEN --name kismet.discord autochthe/kismet.discord
+
+while true; do
+    docker run -it --rm \
+        -e DISCORD_CLIENTID \
+        -e DISCORD_TOKEN \
+        --name kismet.discord autochthe/kismet.discord
+done
