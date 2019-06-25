@@ -73,3 +73,13 @@ chmod a+x kismet.discord
 # DISCORD_TOKEN=xxx.xxx \
 # ./kismet.discord
 ```
+
+The OAuth invite link will print to stdout.
+
+#### Discord Permissions
+Permissions integer: `116800`
+* Send Messages
+* Embed Links
+* Attach Files
+* Read Message History
+* Add Reactions
