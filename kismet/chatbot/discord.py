@@ -5,10 +5,10 @@ from kismet.core import process_markdown
 
 token = getenv("DISCORD_TOKEN", "")
 clientid = getenv("DISCORD_CLIENTID", "0")
-permissions = getenv("DISCORD_PERMISSIONS", "8192")
+permissions = getenv("DISCORD_PERMISSIONS", "1116800")
 
 oauth2_template = (
-    "https://discordapp.com/oauth2/authorize?client_id=%s&scope=bot&permissions=%s"
+    "https://discordapp.com/oauth2/authorize?scope=bot&client_id=%s&permissions=%s"
 )
 oauth2_url = oauth2_template % (clientid, permissions)
 print("Use the following URL to invite:")
