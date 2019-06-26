@@ -1,4 +1,4 @@
 #!/usr/bin/env python
 from setuptools import setup
 
-setup(version="0.1.6")
+setup(version="0.2.0")
