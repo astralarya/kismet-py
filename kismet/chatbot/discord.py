@@ -26,7 +26,7 @@ async def on_message(message):
     else:
         content = message.content
         if client.user in message.mentions:
-            content = content.replace("<@" + client.user.id + ">", "kismet")
+            content = content.replace("<@" + str(client.user.id) + ">", "kismet")
         parsed, emoted = process_markdown(content)
         if parsed:
             await message.channel.send("{0.author.mention}\n".format(message) + parsed)
