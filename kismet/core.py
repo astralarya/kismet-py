@@ -1,3 +1,5 @@
+from typing import Optional
+
 import regex
 
 from kismet.parser import KismetParser
@@ -23,15 +25,24 @@ def process_parts(string: str):
     return (parser.parse(string), analyze(string))
 
 
-def process_markdown(string: str):
+def process_markdown(string: str, mention: Optional[str] = None) -> Optional[str]:
     blocks = code_blocks(string)
     answers = [
         answer
         for answer in [parser.parse(block) for block in blocks]
         if answer is not None
     ]
-    result = "```\n" + "\n".join(answers) + "\n```" if answers else None
-    return (result, analyze(string))
+    parsed = "```\n" + "\n".join(answers) + "\n```" if answers else None
+    emoted = analyze(string)
+    response = []
+    if parsed:
+        response.append(parsed)
+    if emoted:
+        response.append(emoted)
+    if response:
+        return (mention if mention and parsed else "") + "\n".join(response)
+    else:
+        return None
 
 
 def code_blocks(string: str, syntax_type: str = "kismet"):
