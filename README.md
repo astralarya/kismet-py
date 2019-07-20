@@ -29,7 +29,10 @@ docker run -p 8888:8888 autochthe/kismet.jupyter
 docker run -p 8888:8888 autochthe/kismet.jupyter.vim
 ```
 
-### Discord Bot
+### Chatbots
+
+#### Discord
+
 Define `DISCORD_CLIENTID` and `DISCORD_TOKEN`.
 ```bash
 DISCORD_CLIENTID=00000 \
@@ -40,6 +43,16 @@ docker run \
     autochthe/kismet.discord
 ```
 
+
+#### Slack
+
+Define `SLACK_TOKEN`.
+```bash
+SLACK_TOKEN=xxx-xxx-xxx \
+docker run \
+    -e SLACK_TOKEN \
+    autochthe/kismet.slack
+```
 
 ## Docker service runners
 These scripts manage and run Docker services (eg. on cloud hosting).
@@ -83,3 +96,18 @@ Permissions integer: `116800`
 * Attach Files
 * Read Message History
 * Add Reactions
+
+
+### Slack Bot
+Define `SLACK_TOKEN` before execution.
+```bash
+wget https://raw.githubusercontent.com/autochthe/kismet-py/master/docker/run/kismet.slack
+chmod a+x kismet.slack
+
+## Edit `kismet.slack` and
+# ./kismet.slack
+
+## OR
+# SLACK_TOKEN=xxx.xxx \
+# ./kismet.slack
+```

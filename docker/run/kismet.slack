@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# export SLACK_TOKEN=xxx-xxx-xxx
+
+
+docker pull autochthe/kismet.slack
+docker image prune --force
+docker stop kismet.slack
+
+while true; do
+    docker run -it --rm \
+        -e SLACK_TOKEN \
+        --name kismet.slack autochthe/kismet.slack
+done
