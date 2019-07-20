@@ -15,7 +15,6 @@ RUN conda update --all && \
     numpy \
     prompt_toolkit \
     regex \
-    slackclient \
     pytorch \
     ipython'>=7' \
     && \
