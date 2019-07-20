@@ -2,7 +2,7 @@
 
 ### Kismet avatar
 
-<img src="image/Kismet-profile.png" alt="Kismet avatar" width="512" height="512">
+<img src="image/Kismet-profile.png" alt="Kismet avatar" width="512">
 
 Martin Vorel
 
