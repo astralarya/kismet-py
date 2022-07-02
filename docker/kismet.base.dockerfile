@@ -9,6 +9,7 @@ RUN conda update --all && \
     python'>=3.8,<3.9' \
     # Dependencies
     aiohttp \
+    discord.py \
     ipython'>=7' \
     jupyterlab \
     lark-parser \
