@@ -6,9 +6,9 @@ RUN conda update --all && \
     conda config --append channels conda-forge && \
     conda install \
     # Python 3.7
-    python'>=3.7,<3.8' \
+    python'>=3.8,<3.9' \
     # Dependencies
-    aiohttp'>3.5.2,<3.6.0' \
+    aiohttp \
     ipython'>=7' \
     jupyterlab \
     lark-parser \
