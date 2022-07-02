@@ -30,7 +30,6 @@ services:
     depends_on:
       - kismet
 
-
   kismet.jupyter:
     build:
       context: ..
@@ -38,11 +37,3 @@ services:
     image: autochthe/kismet.jupyter
     depends_on:
       - kismet
-
-  kismet.jupyter.vim:
-    build:
-      context: ..
-      dockerfile: docker/kismet.jupyter.vim.dockerfile
-    image: autochthe/kismet.jupyter.vim
-    depends_on:
-      - kismet.jupyter
