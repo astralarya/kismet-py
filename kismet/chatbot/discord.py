@@ -5,7 +5,7 @@ from kismet.core import process_markdown
 
 token = getenv("DISCORD_TOKEN", "")
 clientid = getenv("DISCORD_CLIENTID", "0")
-permissions = getenv("DISCORD_PERMISSIONS", "1116800")
+permissions = getenv("DISCORD_PERMISSIONS", "377957238848")
 
 oauth2_template = (
     "https://discordapp.com/oauth2/authorize?scope=bot&client_id=%s&permissions=%s"

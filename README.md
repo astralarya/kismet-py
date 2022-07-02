@@ -90,8 +90,11 @@ chmod a+x kismet.discord
 The OAuth invite link will print to stdout.
 
 #### Discord Permissions
-Permissions integer: `116800`
+Permissions integer: `377957238848`
 * Send Messages
+* Send Messages in Threads
+* Create Public Threads
+* Create Private Threads
 * Embed Links
 * Attach Files
 * Read Message History
