@@ -24,5 +24,7 @@ fi
 if [ "$1" ]
 then bumpversion "$1"
 fi
-rm -r dist/ build/ &&
+
+cd ..
+rm -rf dist/ build/ &&
 python setup.py sdist bdist_wheel
