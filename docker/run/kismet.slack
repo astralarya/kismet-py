@@ -8,7 +8,6 @@ docker image prune --force
 docker stop kismet.slack
 
 while true; do
-    docker run -it --rm \
-        -e SLACK_TOKEN \
+    docker run -it --rm --env-file .env \
         --name kismet.slack autochthe/kismet.slack
 done

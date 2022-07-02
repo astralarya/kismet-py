@@ -73,18 +73,19 @@ chmod a+x kismet.jupyter.vim
 ```
 
 ### Discord Bot
-Define `DISCORD_CLIENTID` and `DISCORD_TOKEN` before execution.
 ```bash
 wget https://raw.githubusercontent.com/autochthe/kismet-py/master/docker/run/kismet.discord
 chmod a+x kismet.discord
+```
 
-## Edit `kismet.discord` and
-# ./kismet.discord
+Create a `.env` file with `DISCORD_CLIENTID` and `DISCORD_TOKEN`:
+```env
+DISCORD_CLIENTID=00000
+DISCORD_TOKEN=xxx.xxx
+```
 
-## OR
-# DISCORD_CLIENTID=00000 \
-# DISCORD_TOKEN=xxx.xxx \
-# ./kismet.discord
+```bash
+./kismet.discord
 ```
 
 The OAuth invite link will print to stdout.
@@ -99,6 +100,22 @@ Permissions integer: `377957238848`
 * Attach Files
 * Read Message History
 * Add Reactions
+
+### Slack Bot
+
+```bash
+wget https://raw.githubusercontent.com/autochthe/kismet-py/master/docker/run/kismet.slack
+chmod a+x kismet.slack
+```
+
+Create a `.env` file with `SLACK_TOKEN`:
+```env
+SLACK_TOKEN=xxx-xxx-xxx
+```
+
+```bash
+./kismet.slack
+```
 
 
 ### Slack Bot

@@ -9,8 +9,6 @@ docker image prune --force
 docker stop kismet.discord
 
 while true; do
-    docker run -it --rm \
-        -e DISCORD_CLIENTID \
-        -e DISCORD_TOKEN \
+    docker run -it --rm --env-file .env \
         --name kismet.discord autochthe/kismet.discord
 done
