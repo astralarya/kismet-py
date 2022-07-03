@@ -4,6 +4,7 @@ import regex
 
 from kismet.parser import KismetParser
 from kismet.personality.core import analyze
+from kismet.types import Message
 
 # Create parser object.
 parser = KismetParser()
@@ -33,17 +34,13 @@ def process_markdown(string: str, mention: Optional[str] = None) -> Optional[str
         if answer is not None
     ]
     parsed = "```\n" + "\n".join(answers) + "\n```" if answers else None
-    emoted = analyze(string)
-    response = []
     if parsed:
-        response.append(parsed)
-    if emoted:
-        response.append(emoted)
-    if response:
-        return (mention if mention and parsed else "") + "\n".join(response)
+        return (mention + "\n" if mention else "") + parsed;
     else:
         return None
 
+def process_messages(messages):
+    return analyze(messages[0].content)
 
 def code_blocks(string: str, syntax_type: str = "kismet"):
     blocks = []
