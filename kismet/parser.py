@@ -1,10 +1,11 @@
-from lark import Lark, Transformer
-from lark.exceptions import VisitError, UnexpectedToken, UnexpectedCharacters
 from os import path
 from traceback import print_exc
+from typing import Tuple, List
+
+from lark import Lark, Transformer
+from lark.exceptions import VisitError, UnexpectedToken, UnexpectedCharacters
 import torch
 from torch.distributions.categorical import Categorical
-from typing import Tuple, List
 
 grammar_file = "kismet.lark"
 
