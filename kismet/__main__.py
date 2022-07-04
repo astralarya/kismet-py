@@ -12,7 +12,9 @@ session = PromptSession("> ")
 while True:
     try:
         text = session.prompt()
-        print(process(text))
+        result = process(text)
+        if result is not None:
+            print(process(text))
     except EOFError:
         exit(0)
     except KeyboardInterrupt:

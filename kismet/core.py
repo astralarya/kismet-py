@@ -11,20 +11,7 @@ parser = KismetParser()
 
 
 def process(string: str):
-    parsed, emoted = process_parts(string)
-    if parsed and emoted:
-        return parsed + "\n" + emoted
-    elif parsed:
-        return parsed
-    elif emoted:
-        return emoted
-    else:
-        return ""
-
-
-def process_parts(string: str):
-    return (parser.parse(string), analyze(string))
-
+    return parser.parse(string)
 
 def process_markdown(string: str, mention: Optional[str] = None) -> Optional[str]:
     blocks = code_blocks(string)
