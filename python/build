@@ -3,28 +3,6 @@
 cd $(dirname "$0")
 
 
-# Check dependencies
-DEPENDENCIES=(bumpversion)
-MISSING=()
-echo 'Checking app requirements:'
-for package in "${DEPENDENCIES[@]}"
-do printf ' %s...' "$package"
-    if ! command -v "$package"
-    then echo 'MISSING'
-        MISSING+=("$package")
-    fi
-done
-if [ ${#MISSING[@]} -gt 0 ]
-then echo 'Install the following dependencies before proceeding:'
-    printf ' %s\n' "${MISSING[@]}"
-    exit 1
-fi
-
-
-if [ "$1" ]
-then bumpversion "$1"
-fi
-
 cd ..
 rm -rf dist/ build/ &&
 python setup.py sdist bdist_wheel
