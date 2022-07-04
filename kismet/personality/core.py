@@ -34,22 +34,19 @@ KISMET_TIMEDELTA = timedelta(seconds=32)
 KISMET_PATTERN = re.compile(r"[Kk]+\s*[Ii]+\s*[Ss]+\s*[Mm]+\s*[Ee]+\s*[Tt]+")
 
 def analyze(messages: List[Message]):
-    now = datetime.utcnow()
-    recent = list(
-        filter(lambda message: now - message.created_at < KISMET_TIMEDELTA, messages)
-    )
-    recent.reverse()
-    count = len(recent)
-    mentioned = False
+    messages.reverse()
+    count = len(messages)
+    mentioned = None
     attention = 0
-    for idx, message in enumerate(recent):
-        if not mentioned:
-            if is_mentioned(message.content):
-                mentioned = True
-            else:
-                continue
-        attention += get_attention(message.content) * 1/(count - idx)
-    excitement = math.ceil(Gamma(1.2, 2 / attention).sample()) if attention > 0 else 0
+    for idx, message in enumerate(messages):
+        if is_mentioned(message.content):
+            mentioned = idx
+        if mentioned is None:
+            continue
+        delta = datetime.utcnow() - message.created_at
+        attention += get_attention(message.content) * 8/(8+delta.seconds) * 1/(idx - mentioned + 1)
+    print(attention)
+    excitement = round(float(Gamma(1.2, 2 / attention).sample()) if attention > 0 else 0)
     return respond(excitement)
 
 def respond(excitement: int, responder: Responder = responder_):
