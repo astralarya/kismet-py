@@ -1,7 +1,8 @@
 from os import getenv
-from discord import Client
+from discord import Client, Message as DiscordMessage
 
 from kismet.core import process_markdown, process_messages
+from kismet.types import Message
 
 token = getenv("DISCORD_TOKEN", "")
 clientid = getenv("DISCORD_CLIENTID", "0")
@@ -21,6 +22,15 @@ client = Client()
 def replace_mentions(string: str):
     return string.replace("<@" + str(client.user.id) + ">", "Kismet")
 
+def convert_message(message: DiscordMessage):
+    return Message(
+        message_id=message.id,
+        author_id=message.author.id,
+        created_at=message.created_at,
+        edited_at=message.edited_at,
+        reply_id=message.reference.message_id if message.reference else None,
+        content=message.content,
+    )
 
 @client.event
 async def on_message(event):
@@ -31,8 +41,8 @@ async def on_message(event):
         if response:
             await event.reply(response)
         channel = event.channel
-        history = [message async for message in channel.history(limit=16)]
-        reply = process_messages(history)
+        history = [convert_message(message) async for message in channel.history(limit=16)]
+        reply = process_messages(history, client.user.id)
         if reply:
             await event.channel.send(reply)
 

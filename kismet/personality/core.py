@@ -31,7 +31,7 @@ responder_ = Responder()
 KISMET_TIMEDELTA = timedelta(seconds=32)
 KISMET_PATTERN = re.compile(r"[Kk]+\s*[Ii]+\s*[Ss]+\s*[Mm]+\s*[Ee]+\s*[Tt]+")
 
-def analyze(messages: List[Message]):
+def analyze(messages: List[Message], client_id: int):
     if len(messages) == 0:
         return None
     count = len(messages)
@@ -40,11 +40,15 @@ def analyze(messages: List[Message]):
     mentioned = 0
     attention = 0
     for idx, message in enumerate(messages):
-        if is_mentioned(message.content):
+        is_result = (message.author_id == client_id and message.reply_id)
+        if is_result:
+            mentioned = idx
+        elif is_mentioned(message.content):
             mentioned = idx
         delta = latest - message.created_at
         attention += (
             get_attention(message.content)
+            * (0.25 if is_result else 1)
             * 4/(4+delta.seconds)
             * (2/(2*(1 + idx - mentioned)))
             * (2/(2*(1 + count - idx)))

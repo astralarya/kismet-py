@@ -21,8 +21,8 @@ def process_markdown(string: str) -> Optional[str]:
     ]
     return "```\n" + "\n".join(answers) + "\n```" if answers else None
 
-def process_messages(messages: List[Message]):
-    return analyze(messages)
+def process_messages(messages: List[Message], client_id: int):
+    return analyze(messages, client_id)
 
 def code_blocks(string: str, syntax_type: str = "kismet"):
     blocks = []
