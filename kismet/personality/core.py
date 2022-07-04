@@ -37,25 +37,28 @@ def analyze(messages: List[Message], client_id: int):
     count = len(messages)
     latest = messages[0].created_at
     messages.reverse()
-    mentioned = 0
+    alerted = 0
     attention = 0
     for idx, message in enumerate(messages):
         is_result = (message.author_id == client_id and message.reply_id)
-        if is_result:
-            mentioned = idx
-        elif is_mentioned(message.content):
-            mentioned = idx
+        is_alerted = is_result or is_mentioned(message.content)
+        if is_alerted:
+            alerted = idx
         delta = latest - message.created_at
         attention += (
-            get_attention(message.content)
-            * (0.25 if is_result else 1)
-            * 4/(4+delta.seconds)
-            * (2/(2*(1 + idx - mentioned)))
-            * (2/(2*(1 + count - idx)))
-        )
+                (
+                    get_attention(message.content)
+                )
+                * (2 if is_alerted else 1)
+                * (0.25 if message.author_id == client_id else 1)
+                * (0.25 if is_result else 1)
+                * 4/(4+delta.seconds)
+                * (1/(1 + math.exp(0.5 * (idx - alerted - 2))))
+                * (1/(1 + math.exp(0.5 * (count - idx - 2))))
+            )
     excitement = round(
         float(Gamma(
-            1 + (2/(1+math.exp(2 * (count - mentioned - 1)))),
+            1 + (2/(1+math.exp(2 * (count - alerted - 1)))),
             1 / (2 * attention)
         ).sample())
         if attention > 0 else 0
@@ -69,4 +72,4 @@ def is_mentioned(string: str):
     return KISMET_PATTERN.match(string)
 
 def get_attention(string: str):
-    return 1 / (1 + math.exp(-len(string.replace(r"\s", ""))/4))
+    return 1 / (1 + math.exp(-len(string.replace(r"\s", ""))/2))
