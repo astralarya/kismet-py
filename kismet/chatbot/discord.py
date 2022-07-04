@@ -27,9 +27,9 @@ async def on_message(event):
     if event.author == client.user:
         return
     else:
-        response = process_markdown(event.content, "{0.author.mention}".format(event))
+        response = process_markdown(event.content)
         if response:
-            await event.channel.send(response)
+            await event.reply(response)
         channel = event.channel
         history = [message async for message in channel.history(limit=16)]
         reply = process_messages(history)

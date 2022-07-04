@@ -12,18 +12,14 @@ parser = KismetParser()
 def process(string: str):
     return parser.parse(string)
 
-def process_markdown(string: str, mention: Optional[str] = None) -> Optional[str]:
+def process_markdown(string: str) -> Optional[str]:
     blocks = code_blocks(string)
     answers = [
         answer
         for answer in [parser.parse(block) for block in blocks]
         if answer is not None
     ]
-    parsed = "```\n" + "\n".join(answers) + "\n```" if answers else None
-    if parsed:
-        return (mention + "\n" if mention else "") + parsed;
-    else:
-        return None
+    return "```\n" + "\n".join(answers) + "\n```" if answers else None
 
 def process_messages(messages: List[Message]):
     return analyze(messages)
