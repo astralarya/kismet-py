@@ -46,11 +46,8 @@ def analyze(messages: List[Message], client_id: int):
             alerted = idx
         delta = latest - message.created_at
         attention += (
-                (
-                    get_attention(message.content)
-                )
-                * (2 if is_alerted else 1)
-                * (0.25 if message.author_id == client_id else 1)
+                get_attention(message.content, is_alerted)
+                * (0.125 if message.author_id == client_id else 1)
                 * (0.25 if is_result else 1)
                 * 4/(4+delta.seconds)
                 * (1/(1 + math.exp(0.5 * (idx - alerted - 2))))
@@ -71,5 +68,5 @@ def respond(excitement: int, responder: Responder = responder_):
 def is_mentioned(string: str):
     return KISMET_PATTERN.match(string)
 
-def get_attention(string: str):
-    return 1 / (1 + math.exp(-len(string.replace(r"\s", ""))/2))
+def get_attention(string: str, is_alerted: bool):
+    return 1 / (1 + math.exp(-0.125 * (len(string.replace(r"\s", "")) - (2 if is_alerted else 4))))
