@@ -13,7 +13,6 @@ RUN conda update --all && \
     ipython'>=7' \
     jupyterlab \
     lark-parser \
-    numpy \
     prompt_toolkit \
     pytorch \
     ipython'>=7' \
