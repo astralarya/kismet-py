@@ -15,7 +15,6 @@ RUN conda update --all && \
     lark-parser \
     numpy \
     prompt_toolkit \
-    regex \
     pytorch \
     ipython'>=7' \
     && \

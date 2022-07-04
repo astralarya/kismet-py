@@ -1,11 +1,15 @@
-import regex
+from datetime import datetime, timedelta
+import math
+import re
+from typing import List
+
 import torch
 from torch.distributions.gamma import Gamma
 from torch.distributions.categorical import Categorical
 import numpy
-import math
-from typing import List
+
 from kismet.personality.responses import responses as responses_
+from kismet.types import Message
 
 
 class Responder:
@@ -26,18 +30,35 @@ class Responder:
 
 responder_ = Responder()
 
+KISMET_TIMEDELTA = timedelta(seconds=32)
+KISMET_PATTERN = re.compile(r"[Kk]+\s*[Ii]+\s*[Ss]+\s*[Mm]+\s*[Ee]+\s*[Tt]+")
 
-def analyze(string: str, responder: Responder = responder_):
-    return responder.respond(excitement(string))
-
-def excitement(string: str):
-    mentions = len(
-        regex.findall(r"[Kk]+\s*[Ii]+\s*[Ss]+\s*[Mm]+\s*[Ee]+\s*[Tt]+", string)
+def analyze(messages: List[Message]):
+    now = datetime.utcnow()
+    recent = list(
+        filter(lambda message: now - message.created_at < KISMET_TIMEDELTA, messages)
     )
-    if mentions:
-        attention = numpy.arcsinh(mentions) * numpy.arcsinh(
-            math.log(len(string.replace(r"\s", "")))
-        )
-        return int(torch.ceil(Gamma(1.2, 2 / attention).sample()).tolist())
-    else:
-        return 0
+    recent.reverse()
+    count = len(recent)
+    mentioned = False
+    attention = 0
+    for idx, message in enumerate(recent):
+        if not mentioned:
+            if is_mentioned(message.content):
+                mentioned = True
+            else:
+                continue
+        attention += get_attention(message.content) * 1/(count - idx)
+    excitement = math.ceil(Gamma(1.2, 2 / attention).sample()) if attention > 0 else 0
+    return respond(excitement)
+
+def respond(excitement: int, responder: Responder = responder_):
+    return responder.respond(excitement)
+
+def is_mentioned(string: str):
+    return KISMET_PATTERN.match(string)
+
+def get_attention(string: str):
+    return numpy.arcsinh(
+        math.log(len(string.replace(r"\s", "")))
+    )

@@ -1,6 +1,5 @@
-from typing import Optional
-
-import regex
+from typing import List, Optional
+import re
 
 from kismet.parser import KismetParser
 from kismet.personality.core import analyze
@@ -26,8 +25,8 @@ def process_markdown(string: str, mention: Optional[str] = None) -> Optional[str
     else:
         return None
 
-def process_messages(messages):
-    return analyze(messages[0].content)
+def process_messages(messages: List[Message]):
+    return analyze(messages)
 
 def code_blocks(string: str, syntax_type: str = "kismet"):
     blocks = []
@@ -37,7 +36,7 @@ def code_blocks(string: str, syntax_type: str = "kismet"):
         while line:
             if fence:
                 # Look for fence end
-                match = regex.search(fence, line)
+                match = re.search(fence, line)
                 if match:
                     if not ignore:
                         blocks[-1] += line[: match.start()]
@@ -50,7 +49,7 @@ def code_blocks(string: str, syntax_type: str = "kismet"):
                     line = None
             else:
                 # Look for fence start
-                match = regex.search(r"^`{3,}", line)
+                match = re.search(r"^`{3,}", line)
                 if match:
                     fence = "^" + match.group()
                     syntax = line[match.end() :]
@@ -60,7 +59,7 @@ def code_blocks(string: str, syntax_type: str = "kismet"):
                         blocks.append("")
                     line = None
                 else:
-                    match = regex.search(r"`+", line)
+                    match = re.search(r"`+", line)
                     if match:
                         fence = match.group()
                         line = line[match.end() :]
