@@ -35,7 +35,6 @@ KISMET_PATTERN = re.compile(r"[Kk]+\s*[Ii]+\s*[Ss]+\s*[Mm]+\s*[Ee]+\s*[Tt]+")
 
 def analyze(messages: List[Message]):
     messages.reverse()
-    count = len(messages)
     mentioned = None
     attention = 0
     for idx, message in enumerate(messages):
