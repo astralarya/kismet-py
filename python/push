@@ -20,5 +20,4 @@ then echo 'Install the following dependencies before proceeding:'
     exit 1
 fi
 
-cd ..
 twine upload dist/*

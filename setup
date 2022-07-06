@@ -8,7 +8,9 @@ cd "$(dirname "$0")"
 
 printf 'Setup python...'
 
+pushd python
 pip3 install --editable .
+popd
 
 printf 'SUCCESS\n'
 
