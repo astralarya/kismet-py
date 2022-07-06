@@ -15,14 +15,14 @@ spec:
       containers:
         - name: {{ .Chart.Name }}--discord
           image: autochthe/kismet.discord
-          volumeMounts:
-            - name: secret-store
-              mountPath: /mnt/secret-store
-              readOnly: true
-      volumes:
-        - name: secret-store
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: azure-keyvault
+          env:
+            - name: DISCORD_CLIENTID
+              valueFrom:
+                secretKeyRef:
+                  name: kismet-secret
+                  key: discord_clientid
+            - name: DISCORD_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: kismet-secret
+                  key: discord_token
