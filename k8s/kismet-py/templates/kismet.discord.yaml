@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}--discord
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}--discord
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}--discord
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}--discord
+          image: autochthe/kismet.discord
+          volumeMounts:
+            - name: secret-store
+              mountPath: /mnt/secret-store
+              readOnly: true
+      volumes:
+        - name: secret-store
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: azure-keyvault
