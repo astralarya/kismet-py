@@ -4,5 +4,4 @@
 cd "$(dirname "$0")"
 
 
-docker pull continuumio/miniconda3 &&
-docker-compose build
+helm upgrade --install kismet-py helm/
