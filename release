@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -e
+
+# Normalize working directory
+cd "$(dirname "$0")"
+
+
+pushd python
+./build
+./push
+popd
+
+pushd docker
+./build
+./push
+./deploy
+popd
