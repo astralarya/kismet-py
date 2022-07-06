@@ -21,7 +21,8 @@ RUN conda update --all && \
     # Clean up
     conda clean --all
 
-COPY version.txt /root
-RUN pip install --no-cache-dir kismet=="$(cat /root/version.txt)"
+COPY python/kismet/__init__.py /app
+WORKDIR /app
+RUN pip install --no-cache-dir kismet=="$(python -c 'from __init__ import __version__; print(__version__)')"
 
 STOPSIGNAL SIGINT

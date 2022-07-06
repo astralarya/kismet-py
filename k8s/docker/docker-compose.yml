@@ -2,38 +2,38 @@ version: '3.5'
 services:
   kismet.base:
     build:
-      context: ..
-      dockerfile: docker/kismet.base.dockerfile
+      context: ../..
+      dockerfile: k8s/docker/kismet.base.dockerfile
     image: autochthe/kismet.base
 
   kismet:
     build:
-      context: ..
-      dockerfile: docker/kismet.dockerfile
+      context: .
+      dockerfile: kismet.dockerfile
     image: autochthe/kismet
     depends_on:
       - kismet.base
 
   kismet.discord:
     build:
-      context: ..
-      dockerfile: docker/kismet.discord.dockerfile
+      context: .
+      dockerfile: kismet.discord.dockerfile
     image: autochthe/kismet.discord
     depends_on:
       - kismet
 
   kismet.slack:
     build:
-      context: ..
-      dockerfile: docker/kismet.slack.dockerfile
+      context: .
+      dockerfile: kismet.slack.dockerfile
     image: autochthe/kismet.slack
     depends_on:
       - kismet
 
   kismet.jupyter:
     build:
-      context: ..
-      dockerfile: docker/kismet.jupyter.dockerfile
+      context: .
+      dockerfile: kismet.jupyter.dockerfile
     image: autochthe/kismet.jupyter
     depends_on:
       - kismet
