@@ -6,9 +6,17 @@ set -e
 cd "$(dirname "$0")"
 
 
+# Setup python package
+
+printf 'Setup python...'
+
+pip3 install --editable .
+
+printf 'SUCCESS\n'
+
 # Login if necessary
 
-printf 'Checking login...'
+printf 'Checking az login...'
 
 az account show --output none
 
