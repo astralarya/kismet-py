@@ -39,6 +39,6 @@ az keyvault secret show \
   --vault-name "Kismet-py" \
   --query "value" \
   --output tsv \
-  > k8s/kismet-py/values.yaml
+  > k8s/helm/values.yaml
 
 printf 'SUCCESS\n'
