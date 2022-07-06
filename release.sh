@@ -7,12 +7,12 @@ cd "$(dirname "$0")"
 
 
 pushd python
-./build
-./push
+./build.sh
+./push.sh
 popd
 
 pushd docker
-./build
-./push
-./deploy
+./build.sh
+./push.sh
+./deploy.sh
 popd
