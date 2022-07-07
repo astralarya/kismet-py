@@ -6,10 +6,10 @@ set -e
 cd "$(dirname "$0")"
 
 
-printf 'Setup python...'
+printf 'Setup python...\n'
 
 pushd python
-pip3 install --editable .
+./setup.sh
 popd
 
 printf 'SUCCESS\n'
