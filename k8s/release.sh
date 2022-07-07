@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
+set -e
 cd "$(dirname "$0")"
 
 
-pip3 install --editable .[dev]
+./build.sh
+./push.sh
+./deploy.sh

@@ -26,9 +26,11 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-test = [
+dev = [
+	"bumpversion",
 	"pytest-runner>=2.0",
-	"pytest"
+	"pytest",
+	"twine"
 ]
 
 

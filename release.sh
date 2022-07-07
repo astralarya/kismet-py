@@ -4,13 +4,11 @@ set -e
 cd "$(dirname "$0")"
 
 
-pushd python
-./build.sh
-./push.sh
-popd
+printf '# Release python'
 
-pushd docker
-./build.sh
-./push.sh
-./deploy.sh
-popd
+./python/release.sh "$1"
+
+
+printf '# Release prod'
+
+./k8s/release.sh "$1"
