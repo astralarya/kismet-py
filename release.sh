@@ -6,9 +6,9 @@ cd "$(dirname "$0")"
 
 printf '# Release python'
 
-./python/release.sh "$1"
+./python/release.sh
 
 
 printf '# Release prod'
 
-./k8s/release.sh "$1"
+./k8s/release.sh
