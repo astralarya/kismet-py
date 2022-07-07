@@ -9,6 +9,12 @@ az account show --output none
 printf 'SUCCESS\n'
 
 
+printf 'Setup kubectl...'
+az aks get-credentials \
+  --resource-group Kismet-py \
+  --name k8s-kismet-py
+printf 'SUCCESS\n'
+
 printf 'Setup prod env...'
 az keyvault secret show \
   --name "Kismet-values" \
