@@ -5,4 +5,4 @@ cd "$(dirname "$0")"
 
 
 ./build.sh
-./release.sh
+./push.sh

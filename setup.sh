@@ -40,7 +40,7 @@ printf 'SUCCESS\n'
 
 printf 'Setup env...'
 az keyvault secret show \
-  --name "Kismet-Dev-env" \
+  --name "Kismet-env" \
   --vault-name "Kismet-Dev" \
   --query "value" \
   --output tsv \
