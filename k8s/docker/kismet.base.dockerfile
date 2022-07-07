@@ -21,7 +21,7 @@ RUN conda update --all && \
     # Clean up
     conda clean --all
 
-COPY python/src/kismet/__init__.py /app
+COPY python/src/kismet/__init__.py /app/
 WORKDIR /app
 RUN pip install --no-cache-dir kismet=="$(python -c 'from __init__ import __version__; print(__version__)')"
 
