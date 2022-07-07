@@ -4,11 +4,11 @@ set -e
 cd "$(dirname "$0")"
 
 
-printf '# Release python'
+printf '# Release python\n'
 
 ./python/release.sh
 
 
-printf '# Release prod'
+printf '# Release prod\n'
 
 ./k8s/release.sh
