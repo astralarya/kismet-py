@@ -1,17 +1,15 @@
 [project]
 name = "kismet"
-version = "0.8.0"
-authors = [
-  { name="Mara Kim", email="mara@autochthe.net" },
-]
+version = "0.9.0"
+authors = [{ name = "Mara Kim", email = "mara@autochthe.net" }]
 description = "The conversational randomness generator"
 readme = "README.md"
-license = { file="LICENSE" }
+license = { file = "LICENSE" }
 requires-python = ">=3.8"
 classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: GPL3 License",
-    "Operating System :: OS Independent",
+	"Programming Language :: Python :: 3",
+	"License :: OSI Approved :: GPL3 License",
+	"Operating System :: OS Independent",
 ]
 dependencies = [
 	"aiohttp",
@@ -22,16 +20,11 @@ dependencies = [
 	"numpy",
 	"prompt_toolkit",
 	"slackclient",
-	"torch"
+	"torch",
 ]
 
 [project.optional-dependencies]
-dev = [
-	"bumpversion",
-	"pytest-runner>=2.0",
-	"pytest",
-	"twine"
-]
+dev = ["bumpversion", "pytest-runner>=2.0", "pytest", "twine"]
 
 
 [project.urls]
