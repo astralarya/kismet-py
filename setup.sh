@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
 set -e
-
-# Normalize working directory
 cd "$(dirname "$0")"
 
 
@@ -34,13 +32,10 @@ az keyvault secret show \
 printf 'SUCCESS\n'
 
 
-printf 'Setup prod env...'
+printf 'Setup k8s...\n'
 
-az keyvault secret show \
-  --name "Kismet-values" \
-  --vault-name "Kismet-py" \
-  --query "value" \
-  --output tsv \
-  > k8s/helm/values.yaml
+pushd k8s
+./setup.sh
+popd
 
 printf 'SUCCESS\n'

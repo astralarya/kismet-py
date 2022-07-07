@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
 set -e
-
-# Normalize working directory
 cd "$(dirname "$0")"
 
 
